@@ -8,6 +8,7 @@ class ChoiceInline(admin.TabularInline):
 class QuestionAdmin(admin.ModelAdmin):
     #fields=['pub_date','question_text']
     list_display=('question_text','pub_date','was_published_recently')
+    list_filter=['pub_date']
     fieldsets=[("Question",{'fields':['question_text']}),('Date information',{'fields':['pub_date'],'classes':['collapse']})]
     inlines=[ChoiceInline]
 admin.site.register(Question,QuestionAdmin)
