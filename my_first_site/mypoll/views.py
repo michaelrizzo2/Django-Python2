@@ -1,5 +1,6 @@
-from django.http import HttpResponse,Http404
+from django.http import HttpResponse,Http404,HttpResponseRedirect
 from .models import Question
+from django.core.urlresolvers import reverse
 from django.shortcuts import render,get_object_or_404
 #from django.template import RequestContext,loader
 # Create your views here.
@@ -33,4 +34,16 @@ def detail(request,question_id):
 
 results=lambda request,question_id :HttpResponse("You are looking at the results of question %s" % question_id)
 
-vote=lambda request,question_id:HttpResponse("You are voting on question %s" % question_id) 
+#vote=lambda request,question_id:HttpResponse("You are voting on question %s" % question_id) 
+
+#Final version of vote view 
+def vote(request,question_id):
+    p=get_object_or_404(Question,pk=question_id)
+    try:
+        selected_choice=p.choice_set.get(pk=request.POST['choice'])
+    except(KeyError,Choice.DoesNotExist):
+        return render(request,'mypoll/detail.html',{'question':p,'error_message':"you didn't select a choice",})
+    else:
+        selected_choice.votes+=1
+        selected_choice.save()
+        return HttpResponseRedirect(reverse('mypoll:results',args=(p.id,)))
