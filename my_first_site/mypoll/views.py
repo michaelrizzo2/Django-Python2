@@ -32,7 +32,7 @@ def detail(request,question_id):
     return render(request,'mypoll/details.html',{'question':question})
 
 
-results=lambda request,question_id :HttpResponse("You are looking at the results of question %s" % question_id)
+#results=lambda request,question_id :HttpResponse("You are looking at the results of question %s" % question_id)
 
 #vote=lambda request,question_id:HttpResponse("You are voting on question %s" % question_id) 
 
@@ -47,3 +47,8 @@ def vote(request,question_id):
         selected_choice.votes+=1
         selected_choice.save()
         return HttpResponseRedirect(reverse('mypoll:results',args=(p.id,)))
+
+#Final version of results view
+def result(request,question_id):
+    question=get_object_or_404(Question,pk=question_id)
+    return render(request,'mypoll/results.html',{'question':question})
