@@ -1,5 +1,5 @@
 from django.http import HttpResponse,Http404,HttpResponseRedirect
-from .models import Question
+from .models import Question,Choice
 from django.core.urlresolvers import reverse
 from django.shortcuts import render,get_object_or_404
 #from django.template import RequestContext,loader
@@ -42,11 +42,11 @@ def vote(request,question_id):
     try:
         selected_choice=p.choice_set.get(pk=request.POST['choice'])
     except(KeyError,Choice.DoesNotExist):
-        return render(request,'mypoll/detail.html',{'question':p,'error_message':"you didn't select a choice",})
+        return render(request,'mypoll/details.html',{'question':p,'error_message':"you didn't select a choice",})
     else:
         selected_choice.votes+=1
         selected_choice.save()
-        return HttpResponseRedirect(reverse('mypoll:results',args=(p.id,)))
+        return HttpResponseRedirect(reverse('mypoll:result',args=(p.id,)))
 
 #Final version of results view
 def result(request,question_id):
