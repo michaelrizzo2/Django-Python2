@@ -3,6 +3,7 @@ from django.views import generic
 from .models import Question,Choice
 from django.core.urlresolvers import reverse
 from django.shortcuts import render,get_object_or_404
+from django.utils import timezone
 #from django.template import RequestContext,loader
 # Create your views here.
 
@@ -59,7 +60,9 @@ class IndexView(generic.ListView):
     template_name='mypoll/index.html'
     context_object_name='latest_question_list'
 
-    get_queryset=lambda self : Question.objects.order_by('-pub_date')[:5]
+    #get_queryset=lambda self : Question.objects.order_by('-pub_date')[:5]
+    #This will return the last five published questions,this does not include future questions
+    get_queryset=lambda self:Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
 class DetailView(generic.DetailView):
     model=Question
