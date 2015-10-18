@@ -56,3 +56,16 @@ class QuestionViewTests(TestCase):
         create_question(question_text="Past Question.",days=-30)
         response=self.client.get(reverse('mypoll:index'))
         self.assertQuerysetEqual(response.context['latest_question_list'],['<Question: Past Question.>'])
+
+    def test_index_view_with_a_future_question(self):
+
+        """
+                Questions with a pub_date in the future should not be displayed on
+                the index page.
+        """
+
+        create_question(question_text="Future question.",days=30)
+        response=self.client.get(reverse('mypoll:index'))
+        self.assertContains(response,"No polls are available",status_code=200)
+        self.assertQuerysetEqual(response.context['latest_question_list'],[])
+
