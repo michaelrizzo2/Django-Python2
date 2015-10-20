@@ -69,6 +69,7 @@ class DetailView(generic.DetailView):
     template_name='mypoll/details.html'
 
     get_queryset =lambda self:Question.objects.filter(pub_date__lte=timezone.now())
+
 class ResultsView(generic.DetailView):
     model=Question
     template_name='mypoll/results.html'
