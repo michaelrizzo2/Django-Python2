@@ -8,13 +8,13 @@
 	    <link	href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext"	rel="stylesheet"	type="text/css">
 
 	</head>
-	<div>
+	<div class="page-header">
 		<h1><a href="/">Michael's Blog</a></h1>
 	</div>	
 	<body>
 		{% for post in posts%}
-		<div>
-			<p>published :{{post.published_date}}</p>
+		<div class="post">
+			<p>published {{post.published_date}}</p>
 			<h1><a href="">{{post.title}}</a></h1>
 			<p>{{post.text|linebreaks }}</p>
 		</div>
