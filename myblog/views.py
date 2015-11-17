@@ -35,7 +35,7 @@ def post_edit(request,pk):
             post=form.save(commit=False)
             post.author=request.user
             post.published_date=timezone.now()
-            post.save
+            post.save()
             return redirect('myblog.views.post_detail',pk=post.pk)
     else:
         form=PostForm(instance=post)
