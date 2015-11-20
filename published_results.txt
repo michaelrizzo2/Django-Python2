@@ -1,0 +1,39 @@
+Binary file myblog/migrations/0001_initial.pyc matches
+myblog/migrations/0001_initial.py:                ('published_date', models.DateTimeField(null=True, blank=True)),
+myblog/templates/myblog/post_detail.html:		{% if post.published_date %}
+myblog/templates/myblog/post_detail.html:			{{post.published_date }}
+myblog/templates/myblog/post_detail.html:		<a class="btn btn-default" href="{% url "myblog.views.post_publish" pk=post.pk%}">Publish</a>
+myblog/templates/myblog/post_list.html:			<p>published {{post.published_date}}</p>
+myblog/models.py:    published_date=models.DateTimeField(blank=True,null=True)
+myblog/models.py:    def publish(self):
+myblog/models.py:        self.published_date=timezone.now()
+myblog/urls.py:             url(r'^post/(?P<pk>[0-9]+)/publish/$',views.post_publish, name="post_publish"),
+Binary file myblog/views.pyc matches
+myblog/views.py:    posts=Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+myblog/views.py:            post.published_date=timezone.now()
+myblog/views.py:            post.published_date=timezone.now()
+myblog/views.py:    posts=Post.objects.filter(published_date__isnull=True).order_by('created_date')
+myblog/views.py:def post_publish(request,pk):
+myblog/views.py:    post.publish()
+Binary file myblog/urls.pyc matches
+Binary file myblog/models.pyc matches
+my_first_site/mypoll/models.py:    def was_published_recently(self):
+my_first_site/mypoll/models.py:    was_published_recently.admin_order_field='pub_date'
+my_first_site/mypoll/models.py:    was_published_recently.boolean=True
+my_first_site/mypoll/models.py:    was_published_recently.short_description="Published Recently"
+Binary file my_first_site/mypoll/tests.pyc matches
+my_first_site/mypoll/tests.py:    #was published recently should return false for future questions
+my_first_site/mypoll/tests.py:    def test_was_published_recently_with_future_question(self):
+my_first_site/mypoll/tests.py:        self.assertEqual(future_question.was_published_recently(),False)
+my_first_site/mypoll/tests.py:    def test_was_published_recently_with_old_question(self):
+my_first_site/mypoll/tests.py:        self.assertEqual(old_question.was_published_recently(),False)
+my_first_site/mypoll/tests.py:    def test_was_published_recently_with_recent_question(self):
+my_first_site/mypoll/tests.py:        self.assertEqual(recent_question.was_published_recently(),True)
+my_first_site/mypoll/tests.py:        Creates a question with the given `question_text` published the given
+my_first_site/mypoll/tests.py:        number of `days` offset to now (negative for questions published
+my_first_site/mypoll/tests.py:        in the past, positive for questions that have yet to be published).
+my_first_site/mypoll/admin.py:    list_display=('question_text','pub_date','was_published_recently')
+Binary file my_first_site/mypoll/admin.pyc matches
+my_first_site/mypoll/views.py:    #This will return the last five published questions,this does not include future questions
+my_first_site/.ipynb_checkpoints/Exploring Django Api-checkpoint.ipynb:    "q1.was_published_recently()"
+my_first_site/Exploring Django Api.ipynb:    "q1.was_published_recently()"
